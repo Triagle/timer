@@ -18,7 +18,7 @@
                 <li><a href="/?filter=week">this week</a></li>
                 <li><a href="/">all time</a></li>
             </ul>
-        </div></h3> 
+        </div></h3>
         <form method="POST" action="" id="entryForm">
             <input id="entryInput" class="uk-input uk-form-large"></input>
         </form>
@@ -41,8 +41,8 @@
                             <div class="uk-width-expand">
                                 {{entry.name}}
                             </div>
-                            <div class="uk-width-auto uk-visible-toggle">
-                                <ul class="uk-hidden-hover uk-iconnav">
+                            <div class="uk-width-auto">
+                                <ul class="uk-iconnav">
                                     <li><a href="/edit/{{entry.id}}" uk-icon="icon: pencil"></a></li>
                                     <li><a class='delete-button' entry-id='{{entry.id}}' uk-icon="icon: trash"></a></li>
                                 </ul>
