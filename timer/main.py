@@ -5,6 +5,7 @@ from collections import defaultdict
 import re
 import random
 from timer.model import Entry, Project, EntryEncoder, db, decode_entry, format_delta
+from flask_login import login_required
 
 main = Blueprint("main", __name__)
 
@@ -87,6 +88,7 @@ def update():
 
 
 @main.route("/")
+@login_required
 def index():
     total_duration = timedelta()
     clocked_hours = defaultdict(timedelta)
