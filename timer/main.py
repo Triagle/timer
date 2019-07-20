@@ -110,7 +110,7 @@ def index():
     week_start = today - timedelta(days=today.weekday())
     return render_template(
         "index.html",
-        entries=sorted(entries, key=lambda e: e.start),
+        entries=sorted(entries, key=lambda e: e.start, reverse=True),
         total_duration=format_delta(total_duration, include_days=True),
         clocked_hours={k: format_delta(d) for k, d in clocked_hours.items()},
         week_start=week_start.date(),
