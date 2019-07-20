@@ -50,8 +50,13 @@ def delete(id):
 @main.route("/stop", methods=["post"])
 def stop():
     data = json.loads(request.data, object_hook=decode_entry)
-    entry = Entry.query.get(data["id"])
-    entry.end = datetime.utcnow()
+    if data["id"] == "current":
+        for entry in Entry.query.filter(Entry.end == None).all():
+            print(entry)
+            entry.end = datetime.utcnow()
+    else:
+        entry = Entry.query.get(data["id"])
+        entry.end = datetime.utcnow()
     db.session.commit()
     return json.dumps({"status": "ok"})
 
