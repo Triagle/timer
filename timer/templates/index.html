@@ -14,8 +14,8 @@
             <button class='uk-button uk-button-default' type='button'>{{period}}</button>
             <div uk-dropdown>
             <ul class="uk-nav uk-dropdown-nav">
-                <li><a href="/?filter=today">today</a></li>
-                <li><a href="/?filter=week">this week</a></li>
+                <li><a href="/?after={{today.strftime('%Y-%m-%d')}}&period=today">today</a></li>
+                <li><a href="/?after={{week_start.strftime('%Y-%m-%d')}}&period=week">this week</a></li>
                 <li><a href="/">all time</a></li>
             </ul>
         </div></h3>
@@ -69,27 +69,6 @@
             <div>
                 <div class="uk-card uk-card-default uk-card-body">
                     <canvas id="chart" onload="genGraph()"></canvas>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-default uk-card-body">
-                    <h3 class="uk-card-title">Clocked Hours</h3>
-                    <table class="uk-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Hours</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for date, hours in clocked_hours.items() %}
-                            <tr>
-                                <td>{{date.strftime('%Y-%m-%d')}}</td>
-                                <td>{{hours}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>

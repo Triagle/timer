@@ -36,7 +36,7 @@ def add_entry():
             project = new_project(match.group(1))
         name = text[: match.start()].rstrip() + " " + text[match.end() :].lstrip()
 
-    db.session.add(Entry(name=name, start=datetime.now(), end=None, project=project))
+    db.session.add(Entry(name=name, start=datetime.utcnow(), end=None, project=project))
     db.session.commit()
     return json.dumps({"status": "ok"})
 
@@ -51,7 +51,7 @@ def delete(id):
 def stop():
     data = json.loads(request.data, object_hook=decode_entry)
     entry = Entry.query.get(data["id"])
-    entry.end = data["end"]
+    entry.end = datetime.utcnow()
     db.session.commit()
     return json.dumps({"status": "ok"})
 
@@ -92,17 +92,12 @@ def update():
 def index():
     total_duration = timedelta()
     clocked_hours = defaultdict(timedelta)
-    filter = request.args.get("filter")
-    period = "all time"
+    filter = request.args.get("after")
+    period = request.args.get("period")
     entries = []
-    if filter == "today":
-        entries = Entry.query.filter(Entry.start >= datetime.now().date()).all()
-        period = "today"
-    elif filter == "week":
-        today = datetime.now().date()
-        start_week = today - timedelta(days=today.weekday())
-        entries = Entry.query.filter(Entry.start >= start_week).all()
-        period = "this week"
+    if filter is not None:
+        filter_time = datetime.strptime(filter, "%Y-%m-%d").date()
+        entries = Entry.query.filter(Entry.start >= filter_time).all()
     else:
         entries = Entry.query.all()
 
@@ -111,10 +106,14 @@ def index():
             total_duration += entry.duration
             clocked_hours[entry.start.date()] += entry.duration
 
+    today = datetime.utcnow()
+    week_start = today - timedelta(days=today.weekday())
     return render_template(
         "index.html",
-        entries=entries,
+        entries=sorted(entries, key=lambda e: e.start),
         total_duration=format_delta(total_duration, include_days=True),
         clocked_hours={k: format_delta(d) for k, d in clocked_hours.items()},
+        week_start=week_start.date(),
+        today=today.date(),
         period=period,
     )

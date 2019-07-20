@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from dateutil import tz
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -45,7 +46,7 @@ class Entry(db.Model):
 
     @property
     def ongoing_human_duration(self):
-        return format_delta(datetime.now() - self.start)
+        return format_delta(datetime.utcnow() - self.start)
 
 
 class EntryEncoder(json.JSONEncoder):

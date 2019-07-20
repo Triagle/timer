@@ -103,16 +103,7 @@ window.addEventListener('load', function () {
     Array.from(document.getElementsByClassName('stop-button')).forEach((button) => {
         button.addEventListener('click', (event) => {
             let id = event.target.getAttribute('entry-id');
-            let date = new Date();
-            postData('/stop', {id: id,
-                               end: {
-                                   year: date.getFullYear(),
-                                   month: date.getMonth() + 1,
-                                   day: date.getDate(),
-                                   hour: date.getHours(),
-                                   minute: date.getMinutes(),
-                                   second: date.getSeconds()
-                               }})
+            postData('/stop', {id: id})
         })
     })
 })

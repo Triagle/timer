@@ -4,12 +4,12 @@ function putData(url = '', data = {}) {
 
 function dateToJson(date) {
     return {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-        hour: date.getHours(),
-        minute: date.getMinutes(),
-        second: date.getSeconds()
+        year: date.getUTCFullYear(),
+        month: date.getUTCMonth() + 1,
+        day: date.getUTCDate(),
+        hour: date.getUTCHours(),
+        minute: date.getUTCMinutes(),
+        second: date.getUTCSeconds()
     }
 }
 

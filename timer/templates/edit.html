@@ -8,10 +8,10 @@
 {% block content %}
 <form action="/update" id="update-form">
     <input class="uk-input" type="text" name="name" value="{{entry.name}}" />
-    <input class="uk-input" type="text" name="start" value="{{entry.start.strftime('%Y-%m-%d %I:%M')}}" />
+    <input class="uk-input" type="text" name="start" value="{{entry.start.strftime('%Y-%m-%d %I:%M UTC')}}" />
     <input class="uk-input" type="text" name="project" value="{% if entry.project %}{{entry.project.name}}{% endif %}" />
     {% if entry.end %}
-    <input class="uk-input" type="text" name="end" value="{{entry.end.strftime('%Y-%m-%d %I:%M')}}" />
+    <input class="uk-input" type="text" name="end" value="{{entry.end.strftime('%Y-%m-%d %I:%M UTC')}}" />
     {% endif %}
     <input type="button" id="submit-button" value="Update"/>
 </form>
