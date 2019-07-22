@@ -26,7 +26,6 @@ function submitUpdate() {
         name: form.get('name'),
         project: form.get('project'),
     }
-    alert(end_date_entry.defaultValue)
     if (form.has('end') && end_date_entry.defaultValue != end_date_entry.value) {
         let end_date = chrono.parseDate(form.get('end'), referenceDate)
         update_data.end = dateToJson(end_date);
