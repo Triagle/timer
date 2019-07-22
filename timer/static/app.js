@@ -81,9 +81,18 @@ function addEntry(event) {
     postData('/add', {data: add.value}).then(_ => location.reload());
 }
 
+function utcISO(date) {
+    return `${date.getUTCFullYear()}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`
+}
+
 window.addEventListener('load', function () {
     genGraph();
     let form = document.getElementById('entryForm');
+    let today_url = document.getElementById('today-url');
+    var midnight = new Date();
+    midnight.setHours(0, 0, 0, 0);
+    today_url.href = `/?after=${utcISO(midnight)}?period=today`
+    midnight.setHours(0, 0, 0, 0);
     form.addEventListener('submit', addEntry);
     Array.from(document.getElementsByClassName('delete-button')).forEach((delLink) => {
         delLink.addEventListener('click', (event) => {
