@@ -72,18 +72,6 @@ def edit(id):
 @main.route("/update", methods=["put"])
 def update():
     data = json.loads(request.data, object_hook=decode_entry)
-    valid_date = (
-        "start" not in data
-        and "end" not in data
-        or "start" in data
-        and "end" not in data
-        or "start" in data
-        and "end" in data
-        and data["start"] <= data["end"]
-    )
-    if not valid_date or data["name"] == "":
-        return json.dumps({"status": "invalid update"})
-
     entry = Entry.query.get(data["id"])
     entry.name = data["name"]
     if data["project"] == "":
