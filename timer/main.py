@@ -106,7 +106,7 @@ def index():
     total_duration = timedelta()
     clocked_hours = defaultdict(timedelta)
     filter = request.args.get("after")
-    period = request.args.get("period")
+    period = request.args.get("period") or "all time"
     entries = []
     if filter is not None:
         filter_time = datetime.strptime(filter, "%Y-%m-%d").date()
