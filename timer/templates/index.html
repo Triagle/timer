@@ -14,7 +14,7 @@
             <button class='uk-button uk-button-default' type='button'>{{period}}</button>
             <div uk-dropdown>
             <ul class="uk-nav uk-dropdown-nav">
-                <li><a href="/?after={{today.strftime('%Y-%m-%d')}}&period=today">today</a></li>
+                <li><a id='today-url' href="/?after={{today.strftime('%Y-%m-%d')}}&period=today">today</a></li>
                 <li><a href="/?after={{week_start.strftime('%Y-%m-%d')}}&period=week">this week</a></li>
                 <li><a href="/">all time</a></li>
             </ul>
