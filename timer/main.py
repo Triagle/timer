@@ -52,7 +52,6 @@ def stop():
     data = json.loads(request.data, object_hook=decode_entry)
     if data["id"] == "current":
         for entry in Entry.query.filter(Entry.end == None).all():
-            print(entry)
             entry.end = datetime.utcnow()
     else:
         entry = Entry.query.get(data["id"])
@@ -73,20 +72,29 @@ def edit(id):
 @main.route("/update", methods=["put"])
 def update():
     data = json.loads(request.data, object_hook=decode_entry)
-
-    if data["end"] < data["start"] or data["name"] == "":
+    valid_date = (
+        "start" not in data
+        and "end" not in data
+        or "start" in data
+        and "end" not in data
+        or "start" in data
+        and "end" in data
+        and data["start"] <= data["end"]
+    )
+    if not valid_date or data["name"] == "":
         return json.dumps({"status": "invalid update"})
 
     entry = Entry.query.get(data["id"])
     entry.name = data["name"]
     if data["project"] == "":
         entry.project = None
-    elif entry.project:
-        entry.project.name = data["project"]
     else:
-        entry.project = new_project(data["project"])
+        project = Project.query.filter_by(name=data["project"]).first() or new_project(
+            data["project"]
+        )
+        entry.project = project
 
-    entry.start = data["start"]
+    entry.start = data.get("start", entry.start)
     entry.end = data.get("end", entry.end)
     db.session.commit()
     return json.dumps({"status": "ok"})
