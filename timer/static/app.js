@@ -85,14 +85,24 @@ function utcISO(date) {
     return `${date.getUTCFullYear()}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`
 }
 
+function getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+}
+
+
 window.addEventListener('load', function () {
     genGraph();
     let form = document.getElementById('entryForm');
     let today_url = document.getElementById('today-url');
+    let week_url = document.getElementById('week-url');
     var midnight = new Date();
     midnight.setHours(0, 0, 0, 0);
-    today_url.href = `/?after=${utcISO(midnight)}&period=today`
-    midnight.setHours(0, 0, 0, 0);
+    let start_of_week = getMonday(midnight);
+    today_url.href = `/?after=${utcISO(midnight)}&period=today`;
+    week_url.href = `/?after=${utcISO(start_of_week)}&period=week`;
     form.addEventListener('submit', addEntry);
     Array.from(document.getElementsByClassName('delete-button')).forEach((delLink) => {
         delLink.addEventListener('click', (event) => {
