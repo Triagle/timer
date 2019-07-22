@@ -18,16 +18,21 @@ function submitUpdate() {
     var form = new FormData(document.querySelector('#update-form'));
     let url_parts = window.location.pathname.split('/');
     let referenceDate = new Date();
+    let start_date_entry = document.querySelector('#start-date-input');
+    let end_date_entry = document.querySelector('#end-date-input');
     let start_date = chrono.parseDate(form.get('start'), referenceDate);
     let update_data = {
         id: parseInt(url_parts[url_parts.length - 1]),
         name: form.get('name'),
         project: form.get('project'),
-        start: dateToJson(start_date)
     }
-    if (form.has('end')) {
+    alert(end_date_entry.defaultValue)
+    if (form.has('end') && end_date_entry.defaultValue != end_date_entry.value) {
         let end_date = chrono.parseDate(form.get('end'), referenceDate)
         update_data.end = dateToJson(end_date);
+    }
+    if (start_date_entry.defaultValue != start_date_entry.value) {
+        update_data['start'] = dateToJson(start_date);
     }
     fetch('/update', {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
