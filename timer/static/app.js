@@ -91,7 +91,7 @@ window.addEventListener('load', function () {
     let today_url = document.getElementById('today-url');
     var midnight = new Date();
     midnight.setHours(0, 0, 0, 0);
-    today_url.href = `/?after=${utcISO(midnight)}?period=today`
+    today_url.href = `/?after=${utcISO(midnight)}&period=today`
     midnight.setHours(0, 0, 0, 0);
     form.addEventListener('submit', addEntry);
     Array.from(document.getElementsByClassName('delete-button')).forEach((delLink) => {
