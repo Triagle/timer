@@ -109,7 +109,7 @@ def index():
     period = request.args.get("period") or "all time"
     entries = []
     if filter is not None:
-        filter_time = datetime.strptime(filter, "%Y-%m-%d").date()
+        filter_time = datetime.strptime(filter, "%Y-%m-%dT%H:%M:%S.%fZ")
         entries = Entry.query.filter(Entry.start >= filter_time).all()
     else:
         entries = Entry.query.all()

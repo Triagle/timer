@@ -101,8 +101,8 @@ window.addEventListener('load', function () {
     var midnight = new Date();
     midnight.setHours(0, 0, 0, 0);
     let start_of_week = getMonday(midnight);
-    today_url.href = `/?after=${utcISO(midnight)}&period=today`;
-    week_url.href = `/?after=${utcISO(start_of_week)}&period=week`;
+    today_url.href = `/?after=${midnight.toISOString()}&period=today`;
+    week_url.href = `/?after=${start_of_week.toISOString()}&period=week`;
     form.addEventListener('submit', addEntry);
     Array.from(document.getElementsByClassName('delete-button')).forEach((delLink) => {
         delLink.addEventListener('click', (event) => {
